@@ -64,5 +64,6 @@ def take_user_input():
         speak('Sorry, I could not understand. Could you please say that again?')
         query = 'None'
     return query
-
     
+
+
