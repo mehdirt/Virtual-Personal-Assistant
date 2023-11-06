@@ -9,7 +9,7 @@ from decouple import config
 EMAIL = config('EMAIL')
 PASSWORD = config('PASSWORD')
 NEWS_API_KEY = config('NEWS_API_KEY')
-WEATHER_API_KEY = config("WEATHER_API_KEY")
+OPENWEATHER_APP_ID = config("WEATHER_API_KEY")
 TMDB_API_KEY = config('TMDB_API_KEY')
 
 def find_my_ip():
@@ -56,12 +56,12 @@ def get_latest_news():
     return news_headlines[:5]
 
 def get_weather_app(city): #TODO: test needed!
-    res = requests.get(f"http://api.weatherapi.com/v1/current.json?
-                      key={WEATHER_API_KEY}&q={city}").json()
-    weather = res['condition:text']
-    temperature = res['temp_c']
-    feels_like = res['feelslike_c']
-    return (weather, f"{temperature}℃", f"{feels_like}℃")
+    res = requests.get(
+        f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPENWEATHER_APP_ID}&units=metric").json()
+    weather = res["weather"][0]["main"]
+    temperature = res["main"]["temp"]
+    feels_like = res["main"]["feels_like"]
+    return weather, f"{temperature}℃", f"{feels_like}℃"
 
 def get_trending_movies(): # TODO: test nedded!
     trending_movies = []
