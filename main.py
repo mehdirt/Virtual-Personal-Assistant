@@ -1,7 +1,7 @@
 import pyttsx3
+import speech_recognition as sr
 from decouple import config
 from datetime import datetime
-import speech_recognition as sr
 from random import choice
 from utils import opening_text
 
@@ -50,7 +50,7 @@ def take_user_input():
     
     try:
         print('Recognizing...')
-        query = r.recognize_google(audio, language='en-in')
+        query = r.recognize_google(audio)
         if not 'exit' in query or 'stop' in query:
             speak(choice(opening_text))
         else:
