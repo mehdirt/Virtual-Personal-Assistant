@@ -1,6 +1,7 @@
 import os
 import subprocess as sp
 
+# TODO: change the paths
 paths = {
     'notepad': "C:\\Program Files\\Notepad++\\notepad++.exe",
     'discord': "C:\\Users\\ashut\\AppData\\Local\\Discord\\app-1.0.9003\\Discord.exe",

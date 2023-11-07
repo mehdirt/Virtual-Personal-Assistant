@@ -55,7 +55,7 @@ def get_latest_news():
         news_headlines.append(article['title'])
     return news_headlines[:5]
 
-def get_weather_app(city): #TODO: test needed!
+def get_weather_report(city): #TODO: test needed!
     res = requests.get(
         f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPENWEATHER_APP_ID}&units=metric").json()
     weather = res["weather"][0]["main"]
