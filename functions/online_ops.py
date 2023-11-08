@@ -9,7 +9,7 @@ from decouple import config
 EMAIL = config('EMAIL')
 PASSWORD = config('PASSWORD')
 NEWS_API_KEY = config('NEWS_API_KEY')
-OPENWEATHER_APP_ID = config("WEATHER_API_KEY")
+OPENWEATHER_APP_ID = config("OPENWEATHER_APP_ID")
 TMDB_API_KEY = config('TMDB_API_KEY')
 
 def find_my_ip():
@@ -48,7 +48,7 @@ def send_email(receiver_address, subject, message):
 
 def get_latest_news():
     news_headlines = []
-    res = requests.get(f"https://newsapi.org/v2/top-headlines?
+    res = requests.get(f"https://newsapi.org/v2/top-headlines?\
                        country=us&apiKey={NEWS_API_KEY}&category=general").json()
     articles = res['articles']
     for article in articles:
@@ -56,8 +56,8 @@ def get_latest_news():
     return news_headlines[:5]
 
 def get_weather_report(city): #TODO: test needed!
-    res = requests.get(
-        f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPENWEATHER_APP_ID}&units=metric").json()
+    res = requests.get(f"http://api.openweathermap.org/data/2.5/weather?\
+                       q={city}&appid={OPENWEATHER_APP_ID}&units=metric").json()
     weather = res["weather"][0]["main"]
     temperature = res["main"]["temp"]
     feels_like = res["main"]["feels_like"]
