@@ -10,30 +10,30 @@ from functions.os_ops import open_camera, open_notepad, open_cmd, open_calculato
 from functions.online_ops import find_my_ip, search_on_google, search_on_wikipedia, send_email, \
 send_whatsapp_message, get_latest_news, get_random_advice, get_random_joke, get_trending_movies, get_weather_report, play_on_youtube
 
-
+# Config enviroment variables
 USERNAME = config("USER")
 BOTNAME = config("BOTNAME")
 
 engine = pyttsx3.init("sapi5")
 
 # Set rate
-engine.setProperty('rate', 190)
+engine.setProperty('rate', 170)
 
 # Set volume
 engine.setProperty('volume', 1.0)
 
 # Set voice (female)
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[1].id)
+engine.setProperty('voice', voices[0].id)
 
 # Text to speech conversion
-def speak(txt):
+def speak(txt: str) -> None:
     """Used to speak whatever text is passed to it."""
     engine.say(txt)
     engine.runAndWait()
 
 # Greeting function
-def greet_user():
+def greet_user() -> None:
     """Greets the user according to the time"""
     hour = datetime.now().hour
     if (hour >= 6) and (hour < 12):
@@ -45,7 +45,7 @@ def greet_user():
     speak(f"I am {BOTNAME}. How may I assist you?")
 
 # Take input from user
-def take_user_input():
+def take_user_input() -> str:
     """Takes user input, recognizes it using Speech Recognition module and converts it into text"""
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -56,7 +56,7 @@ def take_user_input():
     try:
         print('Recognizing...')
         query = r.recognize_google(audio)
-        if not 'exit' in query or 'stop' in query:
+        if not 'exit' in query or 'stop' in query or 'bye' in query:
             speak(choice(opening_text))
         else:
             hour = datetime.now().hour
@@ -146,16 +146,18 @@ if __name__ == '__main__':
             speak("For your convenience, I am printing it on the screen sir.")
             pprint(advice)
 
-        elif "trending movies" in query: # TODO: create a variable
-            speak(f"Some of the trending movies are: {get_trending_movies()}")
+        elif "trending movies" in query:
+            trending_movies = get_trending_movies()
+            speak(f"Some of the trending movies are: {trending_movies}")
             speak("For your convenience, I am printing it on the screen sir.")
-            print(*get_trending_movies(), sep='\n')
+            print(*trending_movies, sep='\n')
 
-        elif 'news' in query: # TODO: create a variable
+        elif 'news' in query:
+            latest_news = get_latest_news()
             speak(f"I'm reading out the latest news headlines, sir")
-            speak(get_latest_news())
+            speak(latest_news)
             speak("For your convenience, I am printing it on the screen sir.")
-            print(*get_latest_news(), sep='\n')
+            print(*latest_news, sep='\n')
 
         elif 'weather' in query:
             ip_address = find_my_ip()
